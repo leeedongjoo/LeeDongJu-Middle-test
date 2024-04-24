@@ -73,4 +73,27 @@ class SpringTestApplicationTests {
 
         //
     }
+    @Test
+    fun randomNumberMake(){//리스트 5개를 만들고 보너스번호 포함 7가지의 번호배열을 1~45 사이에 랜덤하게 중복없이 뽑은후 각
+        //리스트에 저장합니다.
+        //생성 버튼을 따로만들어 생성버튼을 누를시 작동하게 하고
+        //저장하기 버튼도 만들어 저장하면 랜덤번호 보관함에서 볼수 있습니다
+        val lists = List(5) { generateUniqueRandomNumbers(7, 1, 45) }
+
+        lists.forEachIndexed { index, list ->
+            println("List ${index + 1}: $list")
+        }
+    }
+
+    private fun generateUniqueRandomNumbers(count: Int, min: Int, max: Int): List<Int> {
+        val numbers = mutableSetOf<Int>()
+        while (numbers.size < count) {
+            numbers.add(Random.nextInt(min, max + 1))
+        }
+        return numbers.toList()
+    }
+    @Test
+    fun randomNumberChest(){
+        //랜덤번호 리스트도 보고싶으면 볼 수 있고 로또 당첨 규칙에 맞게 몇등인지도 알려줍니다
+    }
 }
