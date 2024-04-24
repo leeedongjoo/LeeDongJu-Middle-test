@@ -41,4 +41,36 @@ class SpringTestApplicationTests {
         //Login버튼을 만들어 각 이메일과 패스워드를 비교해 일치하는지 확인한 다음 일치하면 로그인이 되고 불일치면 틀렸으니 다시
         //입력하라는 팝업메세지를 출력하면 됩니당.
     }
+    @Test
+    fun SignUp() {
+        // 회원가입입니다 이름과 이메일과 비밀번호를 받습니다.
+        println("이름을입력하세요:")
+        val fullName = readLine() ?: ""
+        println("이메일을 입력하세요:")
+        val email = readLine() ?: ""
+        println("패스워드를 입력하세요:")
+        val password = readLine() ?: ""
+
+        // WebClient 인스턴스 생성
+        val webClient = WebClient.builder()
+            .baseUrl("https://lotto.minq.work")
+            .build()
+
+        // API에 POST 요청 보내기
+        val response = webClient.post()
+            .uri("/api/auth/register") // 회원가입 API 경로
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(mapOf(
+                "fullName" to fullName,
+                "email" to email,
+                "password" to password
+            ))
+            .retrieve() // 응답을 검색하여 처리
+            .bodyToMono(String::class.java) // 응답을 String 형태로 변환
+            .block() // 비동기 요청을 동기적으로 처리, 결과를 기다림
+
+        println("API Response: $response") // API 응답 출력
+
+        //
+    }
 }
